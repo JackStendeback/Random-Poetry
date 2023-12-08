@@ -8,6 +8,16 @@
 </head>
 <body>
     <h1 id="app-title">Random Poetry Generator</h1>
+
+    <h2>Daily Poem</h2>
+    <div id="daily-poem">
+        <h3 id="daily-poem-title"></h3>
+        <p id="daily-poem-text"></p>
+        <p id="daily-poem-author"></p>
+    </div>
+    <button id="save-daily-btn">Save Daily Poem</button>
+
+    <h2>Random Poem</h2>
     <div id="poem-display">
         <h2 id="poem-title"></h2>
         <p id="poem-text"><span id="initial-text">Click "Generate" to get a new poem!</span></p>
@@ -15,7 +25,10 @@
     </div>
     <button id="generate-btn">Generate</button>
     <button id="save-btn">Save</button>
+
+    <h2>Saved Poems</h2>
     <div id="saved-poems"></div>
+
     <script src="main.js"></script>
 </body>
 </html>
