@@ -82,12 +82,34 @@ button, .tab-btn {
     transition: background-color 0.3s ease;
 }
 
-button:hover, .tab-btn:hover, #generate-btn:hover, #save-btn:hover {
+button:hover, .tab-btn:hover {
     background-color: #48CAE4;
 }
 
-button:active, .tab-btn:active, #generate-btn:active, #save-btn:active {
+button:active, .tab-btn:active {
     background-color: #0096C7;
+}
+
+#generate-btn:hover, #save-btn:hover {
+    background-color: #023E8A;
+}
+
+#poem-title {
+    color: #03045E;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#poem-author {
+    color: #0077B6;
+    font-size: 20px;
+    font-style: italic;
+}
+
+#poem-text {
+    color: #023E8A;
+    font-size: 18px;
+    line-height: 1.5;
 }
 
 @media (max-width: 600px) {
