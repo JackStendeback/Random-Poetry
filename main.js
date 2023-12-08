@@ -30,19 +30,25 @@ function savePoem() {
     const title = document.getElementById('poem-title').textContent;
     const author = document.getElementById('poem-author').textContent;
 
-    // Save the poem to localStorage as an object
-    localStorage.setItem('savedPoem', JSON.stringify({ title, author, poem }));
+    // Get the existing poems from localStorage
+    const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
+
+    // Add the new poem to the array
+    savedPoems.push({ title, author, poem });
+
+    // Save the updated array back to localStorage
+    localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
 }
 
 window.onload = function() {
     // Check localStorage for any saved poems
-    const savedPoem = localStorage.getItem('savedPoem');
+    const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
 
-    // If there's a saved poem, display it in the saved poems area
-    if (savedPoem) {
-        const poemObject = JSON.parse(savedPoem);
-        document.getElementById('saved-poems').innerHTML = formatPoem(poemObject);
-    }
+    // Format each poem and join them into a single string
+    const formattedPoems = savedPoems.map(formatPoem).join('');
+
+    // Display the saved poems
+    document.getElementById('saved-poems').innerHTML = formattedPoems;
 };
 
 function formatPoem(poemObject) {
