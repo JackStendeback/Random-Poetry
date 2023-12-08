@@ -41,10 +41,14 @@ window.onload = function() {
     // If there's a saved poem, display it in the saved poems area
     if (savedPoem) {
         const poemObject = JSON.parse(savedPoem);
-        document.getElementById('saved-poems').textContent = formatPoem(poemObject);
+        document.getElementById('saved-poems').innerHTML = formatPoem(poemObject);
     }
 };
 
 function formatPoem(poemObject) {
-    return `${poemObject.title}\nBy ${poemObject.author}\n\n${poemObject.poem}`;
+    return `<div class="poem">
+                <h2 class="poem-title">${poemObject.title}</h2>
+                <p class="poem-text">${poemObject.poem}</p>
+                <p class="poem-author">${poemObject.author}</p>
+            </div>`;
 }

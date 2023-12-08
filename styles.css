@@ -22,6 +22,11 @@ h1 {
     color: #58504A;
 }
 
+#initial-text {
+    font-style: italic; 
+    color: #888;
+}
+
 #poem-display, #saved-poems {
     width: 80%;
     min-height: 200px;
@@ -64,6 +69,22 @@ button:hover {
     margin-top: 20px;
 }
 
+.poem {
+    margin-bottom: 2em;
+}
+
+.poem-title {
+    margin-bottom: 0.5em;
+}
+
+.poem-text {
+    margin-bottom: 0.5em;
+}
+
+.poem-author {
+    font-style: italic;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 10px;
@@ -73,3 +94,4 @@ button:hover {
         width: 100%;
     }
 }
+
