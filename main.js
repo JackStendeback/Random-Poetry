@@ -24,19 +24,80 @@ function generatePoem() {
         });
 }
 
-function savePoem() {
+// Function to display saved poems
+function displaySavedPoems() {
+    const savedPoemsContainer = document.getElementById('saved-poems');
+    savedPoemsContainer.innerHTML = ''; // Clear the container
 
-    // * Get the current poem, title, and author
-    const poem = document.getElementById('poem-text').textContent;
-    const title = document.getElementById('poem-title').textContent;
-    const author = document.getElementById('poem-author').textContent;
-
-    // * Get the existing poems from localStorage
+    // Get the saved poems from localStorage
     const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
 
-    // * Add the new poem to the array
-    savedPoems.push({ title, author, poem });
+    // Create and append a DOM element for each saved poem
+    savedPoems.forEach(poem => {
+        const poemElement = document.createElement('div');
+        poemElement.innerHTML = `
+            <h2 class="poem-title">${poem.title}</h2>
+            <p class="poem-text">${poem.text}</p>
+            <p class="poem-author">${poem.author}</p>
+            <button onclick="removePoem(this)">Remove Poem</button>
+        `;
+        savedPoemsContainer.appendChild(poemElement);
+    });
 }
+
+function savePoem(title, text, author) {
+    // Only proceed if all parts of the poem are defined
+    if (!title || !text || !author) {
+        console.error('Invalid poem data:', { title, text, author });
+        return;
+    }
+
+    // Get the current list of saved poems from localStorage
+    let savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
+
+    // Add the new poem to the list
+    savedPoems.push({ title, text, author });
+
+    // Log the poem data
+    console.log('Saving poem:', { title, text, author });
+
+    // Save the updated list back to localStorage
+    localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
+}
+
+document.getElementById('save-daily-btn').addEventListener('click', () => {
+    // Get the current poem's title, text, and author
+    let title = document.getElementById('daily-poem-title').innerText;
+    let text = document.getElementById('daily-poem-text').innerText;
+    let author = document.getElementById('daily-poem-author').innerText;
+
+    // Save the current poem
+    savePoem(title, text, author);
+});
+
+document.querySelectorAll('.tab-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.dataset.tab;
+
+        // Remove the 'active' class from all tabs and hide all sections
+        document.querySelectorAll('.tab-btn, .tab-content').forEach(element => {
+            element.classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked tab and show the corresponding section
+        button.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+
+        // If the "Saved Poems" tab was clicked, display the saved poems
+        if (tabId === 'saved-poems') {
+            displaySavedPoems();
+        }
+    });
+});
+
+window.onload = function() {
+    document.querySelector('[data-tab="daily-poem"]').click();
+};
 
 window.onload = function() {
     // * Check localStorage for any saved poems
@@ -161,7 +222,3 @@ document.querySelectorAll('.tab-btn').forEach(button => {
         document.getElementById(tabId).classList.add('active');
     });
 });
-
-window.onload = function() {
-    document.querySelector('[data-tab="daily-poem"]').click();
-};
