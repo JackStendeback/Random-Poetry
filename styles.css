@@ -22,6 +22,14 @@ h1 {
     color: #58504A;
 }
 
+#app-title {
+    font-size: 2em; 
+    font-family: 'Georgia', serif; 
+    color: #58504A;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
 #initial-text {
     font-style: italic; 
     color: #888;
@@ -54,7 +62,7 @@ button:hover {
     line-height: 1.5;
     text-align: justify;
     padding: 0 10px;
-    color: #58504A;  /* Change the text color to #58504A */
+    color: #58504A; 
 }
 
 #poem-title {
