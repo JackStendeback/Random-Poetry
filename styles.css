@@ -1,136 +1,93 @@
-#poem-display {
-    background-color: #8ac6d0;
-    border-radius: 10px;
-    padding: 10px;
-    color: #36213E;
-    text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #DBB1BC;
+    font-family: Roboto, sans-serif;
+    margin: 0;
     padding: 20px;
-    color: #58504A;
+    background-color: #CAF0F8;
+    color: #03045E;
 }
 
-h1 {
-    color: #58504A;
+.poem-box {
+    background-color: #90E0EF;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+}
+
+.poem-box h2, .poem-box p {
+    color: #03045E;
 }
 
 #app-title {
-    font-size: 2em; 
-    font-family: 'Georgia', serif; 
-    color: #58504A;
-    margin-bottom: 1em;
     text-align: center;
+    margin-bottom: 20px;
+    color: #023E8A;
 }
 
-#initial-text {
-    font-style: italic; 
-    color: #888;
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
 
-#poem-display, #saved-poems {
-    width: 80%;
-    min-height: 200px;
-    background-color: #D3C4E3;
-    border-radius: 10px;
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #0077B6;
+    color: #CAF0F8;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.tab-btn.active {
+    background-color: #00B4D8;
+    color: #03045E;
+}
+
+.tab-content {
+    display: none;
+    text-align: center;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background-color: #ADE8F4;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#daily-poem-title, #poem-title, #daily-poem-text, #poem-text, #daily-poem-author, #poem-author {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 10px;
+    color: #03045E;
 }
 
 button {
+    display: block;
+    margin: 20px auto;
     padding: 10px 20px;
+    background-color: #48CAE4;
+    color: #CAF0F8;
     border: none;
-    border-radius: 5px;
-    background-color: #8F95D3;
-    color: #fff;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #89DAFF;
+button, .tab-btn {
+    transition: background-color 0.3s ease;
 }
 
-button:active {
-    background-color: #8F95D3;
+button:hover, .tab-btn:hover, #generate-btn:hover, #save-btn:hover {
+    background-color: #48CAE4;
 }
 
-#poem-text {
-    line-height: 1.5;
-    text-align: justify;
-    padding: 0 10px;
-    color: #58504A; 
-}
-
-#poem-title {
-    color: #8F95D3;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-#poem-author {
-    font-family: 'Georgia', serif;
-    color: #58504A;
-    font-size: 1.2em;
-    margin-top: 20px;
-}
-
-.poem {
-    margin-bottom: 2em;
-}
-
-.poem-title {
-    margin-bottom: 0.5em;
-}
-
-.poem-text {
-    margin-bottom: 0.5em;
-}
-
-.poem-author {
-    font-style: italic;
-}
-
-#daily-poem {
-    width: 80%;
-    min-height: 200px;
-    background-color: #D3C4E3;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    color: #58504A;
-    margin-bottom: 20px;
-}
-
-#daily-poem-title {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-}
-
-#daily-poem-text {
-    margin-bottom: 0.5em;
-}
-
-#daily-poem-author {
-    font-family: 'Georgia', serif;
-    font-size: 1.2em;
-    font-style: italic;
-}
-
-h2 {
-    font-size: 2em;
-    font-family: 'Georgia', serif;
-    color: #58504A;
-    margin-bottom: 1em;
-    text-align: center;
+button:active, .tab-btn:active, #generate-btn:active, #save-btn:active {
+    background-color: #0096C7;
 }
 
 @media (max-width: 600px) {
@@ -138,14 +95,11 @@ h2 {
         padding: 10px;
     }
 
-    #poem-display, #saved-poems {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-content {
         width: 100%;
     }
 }
-
-@media screen and (max-width: 600px) {
-    #app-title {
-        text-align: center;
-    }
-}
-

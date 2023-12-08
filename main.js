@@ -146,3 +146,22 @@ function removePoem(button) {
     // Remove the poem element from the DOM
     poemElement.remove();
 }
+
+document.querySelectorAll('.tab-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.dataset.tab;
+
+        // Remove the 'active' class from all tabs and hide all sections
+        document.querySelectorAll('.tab-btn, .tab-content').forEach(element => {
+            element.classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked tab and show the corresponding section
+        button.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    });
+});
+
+window.onload = function() {
+    document.querySelector('[data-tab="daily-poem"]').click();
+};
