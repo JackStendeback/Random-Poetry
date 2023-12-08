@@ -25,6 +25,7 @@ function generatePoem() {
 }
 
 function savePoem() {
+
     // * Get the current poem, title, and author
     const poem = document.getElementById('poem-text').textContent;
     const title = document.getElementById('poem-title').textContent;
@@ -35,9 +36,6 @@ function savePoem() {
 
     // * Add the new poem to the array
     savedPoems.push({ title, author, poem });
-
-    // Save the updated array back to localStorage
-    localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
 }
 
 window.onload = function() {
@@ -107,26 +105,19 @@ function generateDailyPoem() {
 }
 
 function saveDailyPoem() {
-    const poem = document.getElementById('daily-poem-text').textContent;
-    const title = document.getElementById('daily-poem-title').textContent;
-    const author = document.getElementById('daily-poem-author').textContent;
+    // Get the current daily poem, title, and author
+    const dailyPoem = document.getElementById('daily-poem-text').textContent;
+    const dailyTitle = document.getElementById('daily-poem-title').textContent;
+    const dailyAuthor = document.getElementById('daily-poem-author').textContent;
 
+    // Get the existing poems from localStorage
     const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
 
-    const newPoem = { title, poem, author };
-    savedPoems.push(newPoem);
+    // Add the new poem to the array
+    savedPoems.push({ title: dailyTitle, author: dailyAuthor, poem: dailyPoem });
 
+    // Save the updated array to localStorage
     localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
-
-    const formattedPoem = formatPoem(newPoem);
-    const poemDiv = document.createElement('div');
-    poemDiv.innerHTML = formattedPoem;
-    document.getElementById('saved-poems').appendChild(poemDiv);
-
-    poemDiv.querySelector('.remove-btn').addEventListener('click', function() {
-        const index = savedPoems.indexOf(newPoem);
-        savedPoems.splice(index, 1);
-        localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
-        poemDiv.remove();
-    });
 }
+
+document.getElementById('save-daily-btn').addEventListener('click', saveDailyPoem);
