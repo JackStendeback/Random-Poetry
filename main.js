@@ -1,5 +1,4 @@
 document.getElementById('generate-btn').addEventListener('click', generatePoem);
-document.getElementById('save-btn').addEventListener('click', savePoem);
 
 function generatePoem() {
     fetch('https://poetrydb.org/random')
@@ -9,13 +8,11 @@ function generatePoem() {
             let title = data[0].title;
             let author = data[0].author;
 
-            // * Check if the poem is below a certain length
-            if (poem.split(' ').length <= 100) { 
+            if (poem.split(' ').length <= 100) {
                 document.getElementById('poem-text').textContent = poem;
                 document.getElementById('poem-title').textContent = title;
                 document.getElementById('poem-author').textContent = author;
             } else {
-                // * If the poem is too long, generate a new one
                 generatePoem();
             }
         })
@@ -24,31 +21,29 @@ function generatePoem() {
         });
 }
 
-// Function to display saved poems
 function displaySavedPoems() {
     const savedPoemsContainer = document.getElementById('saved-poems');
-    savedPoemsContainer.innerHTML = ''; // Clear the container
+    savedPoemsContainer.innerHTML = '';
 
-    // Get the saved poems from localStorage
     const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
 
-    // Create and append a DOM element for each saved poem
     savedPoems.forEach(poem => {
         const poemElement = document.createElement('div');
         poemElement.innerHTML = `
             <h2 class="poem-title">${poem.title}</h2>
             <p class="poem-text">${poem.text}</p>
             <p class="poem-author">${poem.author}</p>
-            <button onclick="removePoem(this)">Remove Poem</button>
+            <button class="remove-btn">Remove Poem</button>
         `;
         savedPoemsContainer.appendChild(poemElement);
     });
 }
 
 function savePoem(title, text, author) {
-    // Only proceed if all parts of the poem are defined
-    if (!title || !text || !author) {
-        console.error('Invalid poem data:', { title, text, author });
+    console.log('savePoem called with:', { title, text, author });
+    // Ignore calls with incorrect parameters
+    if (typeof title !== 'string' || typeof text !== 'string' || typeof author !== 'string') {
+        console.error('savePoem called with incorrect parameters:', { title, text, author });
         return;
     }
 
@@ -58,22 +53,36 @@ function savePoem(title, text, author) {
     // Add the new poem to the list
     savedPoems.push({ title, text, author });
 
-    // Log the poem data
-    console.log('Saving poem:', { title, text, author });
-
     // Save the updated list back to localStorage
     localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
 }
 
-document.getElementById('save-daily-btn').addEventListener('click', () => {
+document.getElementById('save-btn').addEventListener('click', () => {
     // Get the current poem's title, text, and author
-    let title = document.getElementById('daily-poem-title').innerText;
-    let text = document.getElementById('daily-poem-text').innerText;
-    let author = document.getElementById('daily-poem-author').innerText;
+    let title = document.getElementById('poem-title').innerText;
+    let text = document.getElementById('poem-text').innerText;
+    let author = document.getElementById('poem-author').innerText;
 
     // Save the current poem
     savePoem(title, text, author);
 });
+
+let saveDailyBtn = document.getElementById('save-daily-btn');
+
+// Remove all previous event listeners for saveDailyBtn
+let newSaveDailyBtn = saveDailyBtn.cloneNode(true);
+saveDailyBtn.parentNode.replaceChild(newSaveDailyBtn, saveDailyBtn);
+
+// Attach the new event listener for the cloned button
+newSaveDailyBtn.addEventListener('click', saveDailyPoem);
+
+// Only keep one event listener for the save-daily-btn, remove the additional one if present
+let isSaveDailyPoemListenerAttached = false;
+
+if (!isSaveDailyPoemListenerAttached) {
+    document.getElementById('save-daily-btn').addEventListener('click', saveDailyPoem);
+    isSaveDailyPoemListenerAttached = true;
+}
 
 document.querySelectorAll('.tab-btn').forEach(button => {
     button.addEventListener('click', () => {
@@ -95,28 +104,26 @@ document.querySelectorAll('.tab-btn').forEach(button => {
     });
 });
 
-window.onload = function() {
+window.onload = function () {
     document.querySelector('[data-tab="daily-poem"]').click();
-};
 
-window.onload = function() {
-    // * Check localStorage for any saved poems
+    // Check localStorage for any saved poems
     const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
 
-    // * Format each poem and join them into a single string
+    // Format each poem and join them into a single string
     const formattedPoems = savedPoems.map(formatPoem).join('');
 
-    // * Display the saved poems
+    // Display the saved poems
     document.getElementById('saved-poems').innerHTML = formattedPoems;
 
-    // * Generate the daily poem
+    // Generate the daily poem
     generateDailyPoem();
 };
 
 function formatPoem(poemObject) {
     return `<div class="poem">
                 <h2 class="poem-title">${poemObject.title}</h2>
-                <p class="poem-text">${poemObject.poem}</p>
+                <p class="poem-text">${poemObject.text}</p>
                 <p class="poem-author">${poemObject.author}</p>
                 <button class="remove-btn">Remove</button>
             </div>`;
@@ -128,11 +135,11 @@ function generateDailyPoem() {
     const savedPoem = JSON.parse(localStorage.getItem('dailyPoem'));
 
     if (currentDate === lastFetchDate && savedPoem) {
-        document.getElementById('daily-poem-text').textContent = savedPoem.poem;
+        document.getElementById('daily-poem-text').textContent = savedPoem.text;
         document.getElementById('daily-poem-title').textContent = savedPoem.title;
         document.getElementById('daily-poem-author').textContent = savedPoem.author;
     } else {
-        fetch('https://poetrydb.org/random/5')  // Fetch 5 poems at once
+        fetch('https://poetrydb.org/random/5') // Fetch 5 poems at once
             .then(response => response.json())
             .then(data => {
                 for (let i = 0; i < data.length; i++) {
@@ -148,9 +155,9 @@ function generateDailyPoem() {
 
                         // Save the current date and poem to localStorage
                         localStorage.setItem('lastFetchDate', currentDate);
-                        localStorage.setItem('dailyPoem', JSON.stringify({ title, poem, author }));
+                        localStorage.setItem('dailyPoem', JSON.stringify({ title, text: poem, author }));
 
-                        break;  // Stop checking the rest of the poems
+                        break; // Stop checking the rest of the poems
                     }
                 }
 
@@ -166,25 +173,21 @@ function generateDailyPoem() {
 }
 
 function saveDailyPoem() {
-    // Get the current daily poem, title, and author
-    const dailyPoem = document.getElementById('daily-poem-text').textContent;
-    const dailyTitle = document.getElementById('daily-poem-title').textContent;
-    const dailyAuthor = document.getElementById('daily-poem-author').textContent;
+    // Get the current poem's title, text, and author
+    let title = document.getElementById('daily-poem-title').innerText;
+    let text = document.getElementById('daily-poem-text').innerText;
+    let author = document.getElementById('daily-poem-author').innerText;
 
-    // Get the existing poems from localStorage
-    const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
+    console.log('Saving daily poem:', { title, text, author });
 
-    // Add the new poem to the array
-    savedPoems.push({ title: dailyTitle, author: dailyAuthor, poem: dailyPoem });
-
-    // Save the updated array to localStorage
-    localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
+    // Save the current poem
+    savePoem(title, text, author);
 }
 
 document.getElementById('save-daily-btn').addEventListener('click', saveDailyPoem);
 
 // Event listener for the remove button
-document.getElementById('saved-poems').addEventListener('click', function(event) {
+document.getElementById('saved-poems').addEventListener('click', function (event) {
     if (event.target.classList.contains('remove-btn')) {
         removePoem(event.target);
     }
