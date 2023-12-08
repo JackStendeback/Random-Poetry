@@ -58,6 +58,10 @@ button:hover {
     background-color: #89DAFF;
 }
 
+button:active {
+    background-color: #8F95D3;
+}
+
 #poem-text {
     line-height: 1.5;
     text-align: justify;
