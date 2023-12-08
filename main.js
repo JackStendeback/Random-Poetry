@@ -121,3 +121,28 @@ function saveDailyPoem() {
 }
 
 document.getElementById('save-daily-btn').addEventListener('click', saveDailyPoem);
+
+// Event listener for the remove button
+document.getElementById('saved-poems').addEventListener('click', function(event) {
+    if (event.target.classList.contains('remove-btn')) {
+        removePoem(event.target);
+    }
+});
+
+// Function to remove a poem
+function removePoem(button) {
+    const poemElement = button.parentElement;
+
+    // Get the existing poems from localStorage
+    const savedPoems = JSON.parse(localStorage.getItem('savedPoems')) || [];
+
+    // Remove the poem from the array
+    const poemIndex = savedPoems.findIndex(poem => poem.title === poemElement.querySelector('.poem-title').textContent);
+    savedPoems.splice(poemIndex, 1);
+
+    // Save the updated array to localStorage
+    localStorage.setItem('savedPoems', JSON.stringify(savedPoems));
+
+    // Remove the poem element from the DOM
+    poemElement.remove();
+}
