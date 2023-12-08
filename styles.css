@@ -1,0 +1,75 @@
+#poem-display {
+    background-color: #8ac6d0;
+    border-radius: 10px;
+    padding: 10px;
+    color: #36213E;
+    text-align: center;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #DBB1BC;
+    padding: 20px;
+    color: #58504A;
+}
+
+h1 {
+    color: #58504A;
+}
+
+#poem-display, #saved-poems {
+    width: 80%;
+    min-height: 200px;
+    background-color: #D3C4E3;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8F95D3;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #89DAFF;
+}
+
+#poem-text {
+    line-height: 1.5;
+    text-align: justify;
+    padding: 0 10px;
+    color: #58504A;  /* Change the text color to #58504A */
+}
+
+#poem-title {
+    color: #8F95D3;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+#poem-author {
+    color: #89DAFF;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    #poem-display, #saved-poems {
+        width: 100%;
+    }
+}
