@@ -64,7 +64,8 @@ button:hover {
 }
 
 #poem-author {
-    color: #89DAFF;
+    font-family: 'Georgia', serif;
+    color: #58504A;
     font-size: 1.2em;
     margin-top: 20px;
 }
@@ -92,6 +93,12 @@ button:hover {
 
     #poem-display, #saved-poems {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #app-title {
+        text-align: center;
     }
 }
 
