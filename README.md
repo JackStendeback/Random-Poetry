@@ -14,5 +14,3 @@ Deployment URL On Netlify: https://peaceful-cuchufli-bfd780.netlify.app
 ## Random Joke Generator
 
 ![Jokes Card](https://readme-jokes.vercel.app/api)
-
-## Dedicated to my late, loving Grandma. I love you, and miss you so much. I hope you're proud of me. <3
