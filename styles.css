@@ -119,14 +119,17 @@ button:active, .tab-btn:active {
 
     #poem-title {
         font-size: 20px;
+        text-align: center;
     }
 
     #poem-author {
         font-size: 16px;
+        text-align: center;
     }
 
     #poem-text {
         font-size: 14px;
+        text-align: center;
     }
 
     button {
